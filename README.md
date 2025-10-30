@@ -97,7 +97,11 @@ CREATE INDEX idx_socios_created_at ON socios (created_at);
 ---
 
 ## Ejecutar
+Instalar Dependencias:
 
+```bash
+npm install
+```
 Desarrollo (con recarga):
 
 ```bash
