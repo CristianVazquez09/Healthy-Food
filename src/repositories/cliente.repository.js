@@ -39,10 +39,22 @@ export const clienteRepository = {
     const fields = [];
     const values = [];
 
-    if (data.nombre !== undefined)       { fields.push("nombre = ?");        values.push(data.nombre); }
-    if (data.email !== undefined)        { fields.push("email = ?");         values.push(data.email); }
-    if (data.passwordHash !== undefined) { fields.push("password_hash = ?"); values.push(data.passwordHash); }
-    if (data.activo !== undefined)       { fields.push("activo = ?");        values.push(data.activo ? 1 : 0); }
+    if (data.nombre !== undefined) {
+      fields.push("nombre = ?");
+      values.push(data.nombre);
+    }
+    if (data.email !== undefined) {
+      fields.push("email = ?");
+      values.push(data.email);
+    }
+    if (data.passwordHash !== undefined) {
+      fields.push("password_hash = ?");
+      values.push(data.passwordHash);
+    }
+    if (data.activo !== undefined) {
+      fields.push("activo = ?");
+      values.push(data.activo ? 1 : 0);
+    }
 
     if (fields.length === 0) return this.findById(id);
 
@@ -56,7 +68,20 @@ export const clienteRepository = {
   },
 
   async remove(id) {
-    const [result] = await pool.query(`DELETE FROM clientes WHERE id = ?`, [id]);
+    const [result] = await pool.query(`DELETE FROM clientes WHERE id = ?`, [
+      id,
+    ]);
     return result.affectedRows > 0;
-  }
+  },
+
+  // repositories/cliente.repository.js
+  async findByEmail(email) {
+    const [rows] = await pool.query(
+      `SELECT id, nombre, email, password_hash, activo, created_at AS createdAt, updated_at AS updatedAt
+     FROM clientes
+     WHERE email = ?`,
+      [email]
+    );
+    return rows[0] ?? null;
+  },
 };
