@@ -25,15 +25,6 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   KEY `idx_clientes_created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- (Opcional) Cliente demo
-INSERT INTO `clientes` (nombre, email, password_hash, activo) VALUES
-(
-  'Cliente Demo',
-  'demo@example.com',
-  '$2b$10$uxN3uzuoAwWGEGjcDyR4h..JaW0iopIO2FZ19G8CtSzoqh2NmWUYW',
-  1
-);
-
 -- =========================================================
 -- 4) Direcciones de envío
 -- =========================================================
