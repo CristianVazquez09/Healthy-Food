@@ -1,0 +1,218 @@
+/* Reset sencillo */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Fondo con patrón suave tipo papel tapiz */
+  background-color: #f0fdf4;
+  background-image: radial-gradient(#bbf7d0 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: #064e3b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Contenedor principal */
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 1.5rem;
+}
+
+/* Branding */
+.brand {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.brand-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 30%, #22c55e, #15803d);
+  color: #fefce8;
+  font-size: 2.2rem;
+  margin-bottom: 0.35rem;
+}
+
+.brand-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #166534;
+}
+
+.brand-subtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* Tarjeta */
+.card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.6rem 1.4rem;
+  box-shadow: 0 16px 40px rgba(22, 101, 52, 0.15);
+  margin-bottom: 1rem;
+}
+
+/* Secciones ocultas */
+.hidden {
+  display: none;
+}
+
+/* Formularios */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.field-label span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #15803d;
+  letter-spacing: 0.02em;
+}
+
+/* Inputs estilo “línea inferior” tipo ejemplo */
+.input-wrapper {
+  position: relative;
+  margin-top: 0.25rem;
+}
+
+.input-wrapper input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.8px solid #d1d5db;
+  padding: 0.4rem 0.2rem 0.5rem 1.6rem;
+  font-size: 0.95rem;
+  outline: none;
+  color: #111827;
+  background: transparent;
+}
+
+.input-wrapper input::placeholder {
+  color: #9ca3af;
+}
+
+.input-wrapper input:focus {
+  border-color: #16a34a;
+}
+
+/* Icono de campo (simple con emojis, puedes cambiarlo luego por SVG) */
+.input-icon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: #16a34a;
+}
+
+/* Botones */
+button {
+  margin-top: 0.9rem;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #15803d, #16a34a);
+}
+
+button.secondary {
+  margin-top: 0.8rem;
+  background: #f97316;
+}
+
+button.secondary:hover {
+  background: #ea580c;
+}
+
+/* Link para cambiar entre login / registro */
+.switch {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+.switch a {
+  color: #16a34a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.switch a:hover {
+  text-decoration: underline;
+}
+
+/* Mensajes globales */
+.message {
+  min-height: 1.6rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.message.error {
+  color: #b91c1c;
+}
+
+.message.success {
+  color: #047857;
+}
+
+/* Welcome */
+.card-welcome {
+  text-align: center;
+}
+
+.welcome-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  margin: 0 auto 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 30%, #22c55e, #16a34a);
+  color: #fefce8;
+  font-size: 2rem;
+}
+
+.welcome-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #166534;
+  margin-bottom: 0.35rem;
+}
+
+.welcome-text {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-bottom: 0.4rem;
+}
+
+.welcome-subtext {
+  font-size: 0.8rem;
+  color: #6b7280;
+}

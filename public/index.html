@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Healthy Food - Acceso</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <!-- Branding Healthy Food -->
+    <header class="brand">
+      <div class="brand-logo">🥗</div>
+      <h1 class="brand-title">Healthy Food</h1>
+      <p class="brand-subtitle">Comida saludable, rápida y a un clic.</p>
+    </header>
+
+    <!-- Mensajes globales -->
+    <div id="message" class="message"></div>
+
+    <!-- ===== LOGIN ===== -->
+    <section id="loginSection" class="card">
+      <h2>Iniciar sesión</h2>
+
+      <form id="loginForm" class="form">
+        <label class="field-label">
+          <span>Correo electrónico</span>
+          <div class="input-wrapper">
+            <span class="input-icon"></span>
+            <input
+              type="email"
+              id="loginEmail"
+              required
+              placeholder="tucorreo@example.com"
+            />
+          </div>
+        </label>
+
+        <label class="field-label">
+          <span>Contraseña</span>
+          <div class="input-wrapper">
+            <span class="input-icon"></span>
+            <input
+              type="password"
+              id="loginPassword"
+              required
+              placeholder="••••••••"
+            />
+          </div>
+        </label>
+
+        <button type="submit">Iniciar sesión</button>
+      </form>
+
+      <!-- Aquí NO hay “¿Olvidaste tu contraseña?”,
+           solo el link para ir a crear cuenta -->
+      <p class="switch">
+        ¿Aún no tienes cuenta?
+        <a href="#" id="goToRegister">Crear cuenta</a>
+      </p>
+    </section>
+
+    <!-- ===== REGISTRO ===== -->
+    <section id="registerSection" class="card hidden">
+      <h2>Crear cuenta</h2>
+
+      <form id="registerForm" class="form">
+        <label class="field-label">
+          <span>Nombre completo</span>
+          <div class="input-wrapper">
+            <span class="input-icon">🧑</span>
+            <input
+              type="text"
+              id="registerNombre"
+              required
+              placeholder="Tu nombre"
+            />
+          </div>
+        </label>
+
+        <label class="field-label">
+          <span>Correo electrónico</span>
+          <div class="input-wrapper">
+            <span class="input-icon"></span>
+            <input
+              type="email"
+              id="registerEmail"
+              required
+              placeholder="tucorreo@example.com"
+            />
+          </div>
+        </label>
+
+        <label class="field-label">
+          <span>Contraseña</span>
+          <div class="input-wrapper">
+            <span class="input-icon"></span>
+            <input
+              type="password"
+              id="registerPassword"
+              required
+              placeholder="Mínimo 8 caracteres"
+            />
+          </div>
+        </label>
+
+        <button type="submit">Crear cuenta</button>
+      </form>
+
+      <p class="switch">
+        ¿Ya tienes una cuenta?
+        <a href="#" id="goToLogin">Iniciar sesión</a>
+      </p>
+    </section>
+
+    <!-- ===== WELCOME (después de login) ===== -->
+    <section id="welcomeSection" class="card card-welcome hidden">
+      <div class="welcome-icon">🍏</div>
+      <h2 class="welcome-title">Bienvenido a Healthy Food</h2>
+      <p id="welcomeText" class="welcome-text"></p>
+      <p class="welcome-subtext">
+        Tu sesión se ha iniciado correctamente.  
+        Pronto podrás gestionar tus pedidos y tu perfil saludable desde aquí.
+      </p>
+      <button id="logoutBtn" class="secondary">Cerrar sesión</button>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
