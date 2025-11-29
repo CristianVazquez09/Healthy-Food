@@ -80,6 +80,11 @@ function getSession() {
   return { token, user };
 }
 
+// helper: saber si el usuario es ADMIN
+function isAdmin(user) {
+  return Array.isArray(user?.roles) && user.roles.includes('ADMIN');
+}
+
 // ===== Listeners para cambiar entre login / registro =====
 goToRegister.addEventListener('click', (e) => {
   e.preventDefault();
@@ -123,10 +128,17 @@ loginForm.addEventListener('submit', async (e) => {
     }
 
     const data = await res.json();
-    // Se espera algo como: { token, user: { id, nombre, email } }
+    // { token, user: { id, nombre, email, roles: [...] } }
     saveSession(data.token, data.user);
-    showMessage('Inicio de sesión correcto.', 'success');
-    showWelcome(data.user);
+
+    if (isAdmin(data.user)) {
+      // 👉 si es admin, lo mandamos al panel
+      window.location.href = '/admin';
+    } else {
+      // cliente normal: se queda en la pantalla de bienvenida
+      showMessage('Inicio de sesión correcto.', 'success');
+      showWelcome(data.user);
+    }
   } catch (err) {
     console.error(err);
     showMessage('Error de red al intentar iniciar sesión.', 'error');
@@ -157,8 +169,6 @@ registerForm.addEventListener('submit', async (e) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-        // Si en tu backend protegerás este endpoint, aquí tendrías que agregar:
-        // 'Authorization': `Bearer ${getSession().token}`
       },
       body: JSON.stringify({
         nombre,
@@ -178,12 +188,9 @@ registerForm.addEventListener('submit', async (e) => {
     const data = await res.json();
     showMessage('Cuenta creada correctamente. Ahora puedes iniciar sesión.', 'success');
 
-    // Limpiar formulario de registro
     registerForm.reset();
-
-    // Cambiar a la vista de login
     showLogin();
-    loginEmail.value = data.email || email; // autocompletar si viene del backend
+    loginEmail.value = data.email || email;
   } catch (err) {
     console.error(err);
     showMessage('Error de red al crear la cuenta.', 'error');
@@ -201,8 +208,13 @@ logoutBtn.addEventListener('click', () => {
 window.addEventListener('DOMContentLoaded', () => {
   const { token, user } = getSession();
   if (token && user) {
-    showMessage('Sesión restaurada.', 'success');
-    showWelcome(user);
+    // si ya estaba logueado y es admin, lo mando directo a /admin
+    if (isAdmin(user)) {
+      window.location.href = '/admin';
+    } else {
+      showMessage('Sesión restaurada.', 'success');
+      showWelcome(user);
+    }
   } else {
     showLogin();
   }

@@ -18,11 +18,9 @@ export const authService = {
       throw err;
     }
 
-    // aquí sí necesitamos el hash
     const { id, password_hash, activo } = cliente;
 
-    // opcional: checar si está activo
-    if (activo === 0 || activo === false) {
+    if (!activo) {
       const err = new Error("Cuenta inactiva");
       err.status = 403;
       throw err;
@@ -35,17 +33,23 @@ export const authService = {
       throw err;
     }
 
-    const payload = { sub: id, email }; // sub = subject (id del usuario)
+    // 🔹 roles del cliente
+    let roles = await clienteRepository.findRolesByClienteId(id);
+    if (!roles || roles.length === 0) {
+      roles = ["CLIENTE"];
+    }
+
+    const payload = { sub: id, email, roles };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
 
-    // no regreses el hash
     return {
       token,
       user: {
         id,
         nombre: cliente.nombre,
-        email: cliente.email
-      }
+        email: cliente.email,
+        roles,
+      },
     };
-  }
+  },
 };

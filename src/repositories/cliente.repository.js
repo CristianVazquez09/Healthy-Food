@@ -84,4 +84,17 @@ export const clienteRepository = {
     );
     return rows[0] ?? null;
   },
+
+  findRolesByClienteId
 };
+
+async function findRolesByClienteId(clienteId) {
+  const [rows] = await pool.query(
+    `SELECT r.nombre
+     FROM roles r
+     JOIN cliente_roles cr ON cr.rol_id = r.id
+     WHERE cr.cliente_id = ?`,
+    [clienteId]
+  );
+  return rows.map(r => r.nombre); // ['ADMIN', 'CLIENTE', ...]
+}

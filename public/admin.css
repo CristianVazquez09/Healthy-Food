@@ -1,0 +1,303 @@
+/* Layout general */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* Header superior */
+.admin-header {
+  height: 56px;
+  background: #1f2937;
+  color: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+}
+
+.admin-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 1.1rem;
+}
+
+.admin-brand span {
+  font-weight: 600;
+}
+
+.admin-brand small {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.admin-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.admin-user button {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #f9fafb;
+  background: transparent;
+  color: #f9fafb;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.admin-user button:hover {
+  background: #f9fafb;
+  color: #111827;
+}
+
+/* Contenido principal */
+.admin-main {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+/* Mensajes */
+.admin-message {
+  min-height: 1.4rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.admin-message.error {
+  color: #b91c1c;
+}
+
+.admin-message.success {
+  color: #047857;
+}
+
+/* Menú horizontal */
+.admin-nav {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid #d1d5db;
+  margin-bottom: 1rem;
+}
+
+.tab-btn {
+  border: none;
+  background: transparent;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #4b5563;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+  color: #111827;
+  font-weight: 600;
+  border-bottom-color: #2563eb;
+}
+
+/* Secciones */
+.admin-section {
+  display: none;
+}
+
+.admin-section.active {
+  display: block;
+}
+
+/* Header de sección */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.section-header h2 {
+  font-size: 1.1rem;
+}
+
+/* Botones */
+button.primary {
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 999px;
+  border: none;
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button.primary:hover {
+  background: #1d4ed8;
+}
+
+button.secondary {
+  background: #6b7280;
+  color: #ffffff;
+  border-radius: 999px;
+  border: none;
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button.secondary:hover {
+  background: #4b5563;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-sm.edit {
+  background: #e5e7eb;
+}
+
+.btn-sm.edit:hover {
+  background: #d1d5db;
+}
+
+.btn-sm.delete {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.btn-sm.delete:hover {
+  background: #fecaca;
+}
+
+/* Tabla */
+.table-wrapper {
+  background: #ffffff;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+thead {
+  background: #f9fafb;
+}
+
+th,
+td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+/* Modales */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.modal-dialog {
+  position: relative;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.3);
+  z-index: 10;
+}
+
+.modal-dialog h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Formularios de modal */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.modal-form label {
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.modal-form input,
+.modal-form textarea,
+.modal-form select {
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.9rem;
+}
+
+.modal-form textarea {
+  resize: vertical;
+}
+
+/* Inline checkbox */
+.inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.inline-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Acciones de modal */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}

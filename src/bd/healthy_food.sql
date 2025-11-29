@@ -26,6 +26,57 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- =========================================================
+-- 12) Roles y relación clientes-roles
+-- =========================================================
+
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NOT NULL,
+  `descripcion` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_roles_nombre` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `cliente_roles` (
+  `cliente_id` BIGINT UNSIGNED NOT NULL,
+  `rol_id` BIGINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`cliente_id`, `rol_id`),
+  CONSTRAINT `fk_cliente_roles_cliente`
+    FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_cliente_roles_rol`
+    FOREIGN KEY (`rol_id`) REFERENCES `roles` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Roles base
+INSERT INTO `roles` (nombre, descripcion) VALUES
+('ADMIN', 'Administrador del sistema'),
+('CLIENTE', 'Cliente de la tienda')
+ON DUPLICATE KEY UPDATE descripcion = VALUES(descripcion);
+
+-- Crear un administrador inicial (si no existe)
+INSERT INTO `clientes` (nombre, email, password_hash, activo)
+VALUES (
+  'Admin HealthyFood',
+  'admin@healthyfood.com',
+  '$2b$10$uxN3uzuoAwWGEGjcDyR4h..JaW0iopIO2FZ19G8CtSzoqh2NmWUYW',
+  1
+)
+ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
+
+-- Asignar rol ADMIN al admin inicial
+INSERT INTO cliente_roles (cliente_id, rol_id)
+SELECT c.id, r.id
+FROM clientes c, roles r
+WHERE c.email = 'admin@healthyfood.com'
+  AND r.nombre = 'ADMIN'
+ON DUPLICATE KEY UPDATE cliente_id = cliente_id;
+
+
+-- =========================================================
 -- 4) Direcciones de envío
 -- =========================================================
 CREATE TABLE IF NOT EXISTS `direcciones` (
@@ -209,3 +260,5 @@ CREATE TABLE IF NOT EXISTS `pagos` (
     ON DELETE CASCADE
     ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+select * from clientes
