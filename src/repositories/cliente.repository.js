@@ -1,9 +1,12 @@
+// src/repositories/cliente.repository.js
 import { pool } from "../utils/db.js";
 
 export const clienteRepository = {
   async findAll({ limit = 50, offset = 0 } = {}) {
     const [rows] = await pool.query(
-      `SELECT id, nombre, email, activo, created_at AS createdAt, updated_at AS updatedAt
+      `SELECT id, nombre, email, activo,
+              created_at AS createdAt,
+              updated_at AS updatedAt
        FROM clientes
        ORDER BY created_at DESC
        LIMIT ? OFFSET ?`,
@@ -14,25 +17,60 @@ export const clienteRepository = {
 
   async findById(id) {
     const [rows] = await pool.query(
-      `SELECT id, nombre, email, activo, created_at AS createdAt, updated_at AS updatedAt
-       FROM clientes WHERE id = ?`,
+      `SELECT id, nombre, email, activo,
+              created_at AS createdAt,
+              updated_at AS updatedAt
+       FROM clientes
+       WHERE id = ?`,
       [id]
     );
     return rows[0] ?? null;
   },
 
+  /**
+   * Crea un cliente y le asigna por defecto el rol CLIENTE
+   */
   async create({ nombre, email, passwordHash, activo = true }) {
-    const [result] = await pool.query(
-      `INSERT INTO clientes (nombre, email, password_hash, activo)
-       VALUES (?, ?, ?, ?)`,
-      [nombre, email, passwordHash, activo ? 1 : 0]
-    );
-    const [rows] = await pool.query(
-      `SELECT id, nombre, email, activo, created_at AS createdAt, updated_at AS updatedAt
-       FROM clientes WHERE id = ?`,
-      [result.insertId]
-    );
-    return rows[0];
+    const conn = await pool.getConnection();
+    try {
+      await conn.beginTransaction();
+
+      // 1) Insert en clientes
+      const [result] = await conn.query(
+        `INSERT INTO clientes (nombre, email, password_hash, activo)
+         VALUES (?, ?, ?, ?)`,
+        [nombre, email, passwordHash, activo ? 1 : 0]
+      );
+
+      const clienteId = result.insertId;
+
+      // 2) Asignar rol CLIENTE por defecto
+      await conn.query(
+        `INSERT INTO cliente_roles (cliente_id, rol_id)
+         SELECT ?, r.id
+         FROM roles r
+         WHERE r.nombre = 'CLIENTE'`,
+        [clienteId]
+      );
+
+      // 3) Devolver el cliente creado
+      const [rows] = await conn.query(
+        `SELECT id, nombre, email, activo,
+                created_at AS createdAt,
+                updated_at AS updatedAt
+         FROM clientes
+         WHERE id = ?`,
+        [clienteId]
+      );
+
+      await conn.commit();
+      return rows[0];
+    } catch (e) {
+      await conn.rollback();
+      throw e;
+    } finally {
+      conn.release();
+    }
   },
 
   async update(id, data) {
@@ -60,9 +98,12 @@ export const clienteRepository = {
 
     values.push(id);
     const [result] = await pool.query(
-      `UPDATE clientes SET ${fields.join(", ")} WHERE id = ?`,
+      `UPDATE clientes
+       SET ${fields.join(", ")}
+       WHERE id = ?`,
       values
     );
+
     if (result.affectedRows === 0) return null;
     return this.findById(id);
   },
@@ -74,12 +115,13 @@ export const clienteRepository = {
     return result.affectedRows > 0;
   },
 
-  // repositories/cliente.repository.js
   async findByEmail(email) {
     const [rows] = await pool.query(
-      `SELECT id, nombre, email, password_hash, activo, created_at AS createdAt, updated_at AS updatedAt
-     FROM clientes
-     WHERE email = ?`,
+      `SELECT id, nombre, email, password_hash, activo,
+              created_at AS createdAt,
+              updated_at AS updatedAt
+       FROM clientes
+       WHERE email = ?`,
       [email]
     );
     return rows[0] ?? null;

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Healthy Food - Tienda</title>
+  <link rel="stylesheet" href="/store/store.css" />
+</head>
+<body>
+  <div class="hf-shell">
+    <!-- HEADER / NAV -->
+    <header class="hf-header">
+      <div class="hf-brand">
+        <div class="hf-logo">🥗</div>
+        <div class="hf-brand-text">
+          <span class="hf-brand-title">Healthy Food</span>
+          <span class="hf-brand-subtitle">Comida saludable a un clic.</span>
+        </div>
+      </div>
+
+      <nav class="hf-nav">
+        <div class="hf-nav-left">
+          <button class="nav-link active" data-view="catalogo">Productos</button>
+          <button class="nav-link" data-view="pedidos">Mis pedidos</button>
+        </div>
+
+        <div class="hf-nav-right">
+          <button id="btnCart" class="cart-button">
+            <span>Carrito</span>
+            <span id="cartCount" class="badge">0</span>
+          </button>
+
+          <div class="hf-user">
+            <span id="userName" class="hf-user-name"></span>
+            <button id="btnLogout" class="hf-link">Cerrar sesión</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MENSAJE GLOBAL -->
+    <div id="globalMessage" class="global-message"></div>
+
+    <!-- MAIN -->
+    <main class="hf-main">
+      <!-- ========== VISTA CATÁLOGO ========== -->
+      <section id="view-catalogo" class="view active">
+        <aside class="filters-card">
+          <h3>Categorías</h3>
+          <p class="filters-subtitle">
+            Filtra por tipo de producto o explora todo el catálogo.
+          </p>
+          <div id="categoryFilters" class="chip-group">
+            <!-- Chips de categorías aquí -->
+          </div>
+        </aside>
+
+        <section class="products-area">
+          <div class="products-header">
+            <h1>Menú saludable</h1>
+            <p>
+              Elige tus platillos, snacks y bebidas saludables y agrégalos a tu carrito.
+            </p>
+          </div>
+
+          <div id="productsGrid" class="products-grid">
+            <!-- Cards de productos aquí -->
+          </div>
+        </section>
+      </section>
+
+      <!-- ========== VISTA PEDIDOS ========== -->
+      <section id="view-pedidos" class="view">
+        <div class="section-header">
+          <div>
+            <h1>Mis pedidos</h1>
+            <p>Consulta el historial de tus órdenes en Healthy Food.</p>
+          </div>
+        </div>
+
+        <div class="card-table">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Método pago</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyPedidos">
+              <!-- Filas de pedidos -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========== DRAWER CARRITO ========== -->
+    <div id="cartDrawer" class="cart-drawer hidden">
+      <div class="cart-header">
+        <h2>Tu carrito</h2>
+        <button id="btnCloseCart" class="icon-btn" type="button">&times;</button>
+      </div>
+
+      <div id="cartItems" class="cart-items">
+        <!-- Items del carrito -->
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-summary">
+          <span>Total</span>
+          <span id="cartTotal" class="cart-total-amount">$0.00</span>
+        </div>
+        <button id="btnCheckout" class="btn-primary full-width">
+          Confirmar pedido
+        </button>
+      </div>
+    </div>
+
+    <!-- Overlay del drawer -->
+    <div id="cartBackdrop" class="cart-backdrop hidden"></div>
+
+    <!-- ========== MODAL CHECKOUT ========== -->
+    <div id="checkoutModal" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Confirmar pedido</h2>
+          <button id="btnCloseCheckout" class="icon-btn" type="button">&times;</button>
+        </div>
+        <form id="checkoutForm" class="modal-body">
+          <label class="field-label">
+            <span>Dirección de envío</span>
+            <select id="direccionSelect" required></select>
+          </label>
+
+          <label class="field-label">
+            <span>Método de pago</span>
+            <select id="metodoPago" required>
+              <option value="EFECTIVO">Efectivo</option>
+              <option value="TARJETA">Tarjeta</option>
+              <option value="TRANSFERENCIA">Transferencia</option>
+              <option value="OTRO">Otro</option>
+            </select>
+          </label>
+
+          <label class="field-label">
+            <span>Observaciones</span>
+            <textarea
+              id="observaciones"
+              rows="3"
+              placeholder="Indicaciones para la entrega, horarios, referencias, etc."
+            ></textarea>
+          </label>
+
+          <div class="modal-actions">
+            <button type="button" id="btnCancelCheckout" class="btn-secondary">
+              Cancelar
+            </button>
+            <button type="submit" class="btn-primary">
+              Confirmar pedido
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/store/store.js"></script>
+</body>
+</html>

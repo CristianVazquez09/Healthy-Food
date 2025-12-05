@@ -1,4 +1,4 @@
-// routes/clientes.routes.js
+// src/routes/clientes.routes.js
 import { Router } from "express";
 import {
   listarClientes,
@@ -11,13 +11,20 @@ import { authRequired, requireRole } from "../middlewares/auth.js";
 
 const router = Router();
 
-// Todas las rutas de clientes requieren autenticación y rol ADMIN
-router.use(authRequired, requireRole("ADMIN"));
+// 🔒 Solo ADMIN puede listar todos los clientes
+router.get("/", authRequired, requireRole("ADMIN"), listarClientes);
 
-router.get("/", listarClientes);
-router.get("/:id", obtenerCliente);
+// 🔒 Solo ADMIN puede ver detalle de un cliente por id
+router.get("/:id", authRequired, requireRole("ADMIN"), obtenerCliente);
+
+// ✅ Registro público (NO requiere token)
+// Se usa para crear cuentas desde el formulario de registro
 router.post("/", crearCliente);
-router.patch("/:id", actualizarCliente);
-router.delete("/:id", eliminarCliente);
+
+// 🔒 Solo ADMIN puede actualizar clientes
+router.patch("/:id", authRequired, requireRole("ADMIN"), actualizarCliente);
+
+// 🔒 Solo ADMIN puede eliminar clientes
+router.delete("/:id", authRequired, requireRole("ADMIN"), eliminarCliente);
 
 export default router;
