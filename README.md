@@ -1,4 +1,3 @@
-````md
 # Healthy Food API 🍏
 
 API base con **Express** usando patrón **MVC** (+ capa de **servicios** y **repositorios**), validación con **Zod**, acceso a datos con **mysql2/promise** y autenticación con **JWT**.
@@ -86,7 +85,7 @@ public/
   app.js          # llamada a /api/auth/login y /api/clientes
 
 .env              # se crea manualmente (no se versiona)
-````
+```
 
 ---
 
@@ -115,20 +114,18 @@ bd/healthy_food.sql
 
 Este script:
 
-* Crea la base de datos `HealthyFood`.
+- Crea la base de datos `HealthyFood`.
+- Crea la tabla `clientes`.
+- Crea el resto de tablas de e-commerce:
 
-* Crea la tabla `clientes`.
+  - `direcciones`
+  - `categorias`
+  - `productos` (incluye campos nutricionales: calorías, proteínas, etc.)
+  - `carritos` y `carrito_items`
+  - `pedidos` y `pedido_items`
+  - `pagos`
 
-* Crea el resto de tablas de e-commerce:
-
-  * `direcciones`
-  * `categorias`
-  * `productos` (incluye campos nutricionales: calorías, proteínas, etc.)
-  * `carritos` y `carrito_items`
-  * `pedidos` y `pedido_items`
-  * `pagos`
-
-* Inserta un cliente demo con contraseña hasheada (para pruebas).
+- Inserta un cliente demo con contraseña hasheada (para pruebas).
 
 #### Opción A: usar CLI de MySQL
 
@@ -149,9 +146,9 @@ Te pedirá la contraseña del usuario de MySQL y ejecutará todo el script.
 
 Al terminar, deberías tener:
 
-* Base de datos: `HealthyFood`
-* Tablas: `clientes`, `categorias`, `productos`, etc.
-* Un registro de cliente demo (con contraseña ya hasheada).
+- Base de datos: `HealthyFood`
+- Tablas: `clientes`, `categorias`, `productos`, etc.
+- Un registro de cliente demo (con contraseña ya hasheada).
 
 ---
 
@@ -176,10 +173,9 @@ JWT_SECRET=UN_SECRETO_LARGO_Y_ALEATORIO_AQUI
 JWT_EXPIRES_IN=1h
 ```
 
-> 🔐 **Importante:**
->
-> * No subas tu `.env` a GitHub.
-> * Cambia `JWT_SECRET` por una cadena larga y difícil de adivinar.
+> 🔐 **Importante:**  
+> - No subas tu `.env` a GitHub.  
+> - Cambia `JWT_SECRET` por una cadena larga y difícil de adivinar.
 
 ---
 
@@ -211,10 +207,10 @@ node src/server.js
 
 ### Health
 
-* `GET /`
+- `GET /`  
   Respuesta rápida para saber si la API está viva.
 
-* `GET /api/health`
+- `GET /api/health`  
   Devuelve algo como:
 
 ```json
@@ -241,7 +237,7 @@ Permite hacer login con email y contraseña, y devuelve un **JWT**.
 }
 ```
 
-> El usuario `demo@example.com` se crea con el script `bd/healthy_food.sql`.
+> El usuario `demo@example.com` se crea con el script `bd/healthy_food.sql`.  
 > La contraseña en texto plano para pruebas es `12345678`.
 
 **Respuesta exitosa:**
@@ -279,8 +275,8 @@ Lista paginada de clientes.
 
 Query params opcionales:
 
-* `limit` (por defecto 50)
-* `offset` (por defecto 0)
+- `limit` (por defecto 50)
+- `offset` (por defecto 0)
 
 Ejemplo:
 
@@ -378,8 +374,8 @@ Lista paginada de categorías.
 
 Query params opcionales:
 
-* `limit` (por defecto 50)
-* `offset` (por defecto 0)
+- `limit` (por defecto 50)
+- `offset` (por defecto 0)
 
 ```http
 GET /api/categorias?limit=20&offset=0
@@ -474,9 +470,9 @@ Lista de productos (opcionalmente paginada, filtrada por categoría).
 
 Parámetros de query frecuentes:
 
-* `limit` (por defecto 50)
-* `offset` (por defecto 0)
-* `categoriaId` (opcional: filtra por categoría)
+- `limit` (por defecto 50)
+- `offset` (por defecto 0)
+- `categoriaId` (opcional: filtra por categoría)
 
 ```http
 GET /api/productos?limit=10&offset=0&categoriaId=1
@@ -575,7 +571,7 @@ DELETE /api/productos/10
 Authorization: Bearer <token>
 ```
 
-> 💡 **Nota:**
+> 💡 **Nota:**  
 > Internamente puedes optar por un borrado lógico (`activo = 0`) en lugar de un `DELETE` real, para no perder historial de pedidos.
 
 ---
@@ -584,11 +580,10 @@ Authorization: Bearer <token>
 
 En la carpeta `public/` viene un mini frontend estático para probar la autenticación y creación de clientes sin necesidad de Postman:
 
-* `GET /` → sirve `public/index.html` con:
-
-  * Formulario de **login** que llama a `POST /api/auth/login`.
-  * Formulario de **registro** que llama a `POST /api/clientes`.
-* Usa `localStorage` para guardar el **JWT** y los datos básicos del usuario.
+- `GET /` → sirve `public/index.html` con:
+  - Formulario de **login** que llama a `POST /api/auth/login`.
+  - Formulario de **registro** que llama a `POST /api/clientes`.
+- Usa `localStorage` para guardar el **JWT** y los datos básicos del usuario.
 
 Es solo una interfaz de ejemplo / demo para trabajar contra la API; en un proyecto real podrías reemplazarlo por un frontend en React, Vue, Angular, etc.
 
@@ -597,6 +592,3 @@ Es solo una interfaz de ejemplo / demo para trabajar contra la API; en un proyec
 ## 👤 Autor
 
 Cristian Iván Vázquez Gómez
-
-```
-```
